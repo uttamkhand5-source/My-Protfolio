@@ -1,0 +1,2 @@
+{% extends "base.html" %}{% block title %}{{post.title}} · {{site.name}}{% endblock %}{% block content %}
+<section class="article"><a href="{{url_for('main.index')}}">← Home</a><span class="eyebrow">ARTICLE</span><h1>{{post.title}}</h1><p class="lead">{{post.excerpt}}</p><div class="article-body">{{post.content|replace('\n','<br>')|safe}}</div></section>{% endblock %}

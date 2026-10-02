@@ -1,0 +1,2 @@
+{% extends "admin/base.html" %}{% block content %}<div class="page-head"><h1>Messages</h1></div>{% for x in items %}<div class="panel message"><div><b>{{x.name}}</b> · {{x.email}} <small>{{x.created_at}}</small></div><h3>{{x.subject}}</h3><p>{{x.message}}</p><form method="post" action="{{url_for('admin.message_delete',id=x.id)}}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button>Delete</button></form></div>{% else %}<div class="panel"><p>No messages yet.</p></div>{% endfor %}{% endblock %}

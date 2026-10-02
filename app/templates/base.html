@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{% block title %}{{ site.name if site else 'Portfolio' }}{% endblock %}</title>
+<meta name="description" content="{{ site.tagline if site else 'Modern Flask Portfolio' }}">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<header class="navbar">
+<a class="brand" href="{{ url_for('main.index') }}">{{ site.name if site else 'Portfolio' }}</a>
+<nav><a href="{{ url_for('main.index') }}#about">About</a><a href="{{ url_for('main.index') }}#skills">Skills</a><a href="{{ url_for('main.index') }}#projects">Projects</a><a href="{{ url_for('main.index') }}#contact">Contact</a></nav>
+<button class="theme-btn" onclick="toggleTheme()">◐</button>
+</header>
+{% with messages=get_flashed_messages(with_categories=true) %}{% if messages %}<div class="flash-wrap">{% for cat,msg in messages %}<div class="flash {{cat}}">{{msg}}</div>{% endfor %}</div>{% endif %}{% endwith %}
+<main>{% block content %}{% endblock %}</main>
+<footer><p>© {{ site.name if site else 'Portfolio' }} · Built with Flask</p></footer>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body></html>

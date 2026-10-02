@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+<div class="hero-copy"><span class="eyebrow">AVAILABLE FOR PROJECTS</span><h1>Hi, I'm <span>{{site.name}}</span>.</h1><h2>{{site.role}}</h2><p>{{site.tagline}}</p>
+<div class="actions"><a class="btn primary" href="#projects">View Projects ↗</a><a class="btn" href="#contact">Let's Talk</a></div>
+<div class="socials"><a href="{{site.github}}" target="_blank">GitHub</a><a href="{{site.linkedin}}" target="_blank">LinkedIn</a><a href="{{site.instagram}}" target="_blank">Instagram</a></div></div>
+<div class="hero-card">{% if site.profile_image %}<img src="{{url_for('static',filename='uploads/'+site.profile_image)}}">{% else %}<div class="avatar">UK</div>{% endif %}<div class="status">● Open to opportunities</div></div>
+</section>
+
+<section id="about" class="section split"><div><span class="eyebrow">ABOUT ME</span><h2>Building ideas into real projects.</h2></div><div><p>{{site.about}}</p><div class="facts"><span>📍 {{site.location}}</span><span>✉ {{site.email}}</span></div></div></section>
+
+<section id="skills" class="section"><span class="eyebrow">EXPERTISE</span><h2>Skills & Technologies</h2><div class="skills-grid">{% for s in skills %}<div class="skill"><div><b>{{s.name}}</b><span>{{s.level}}%</span></div><div class="bar"><i style="width:{{s.level}}%"></i></div></div>{% endfor %}</div></section>
+
+<section id="projects" class="section"><span class="eyebrow">SELECTED WORK</span><h2>Featured Projects</h2><div class="projects-grid">{% for p in projects %}<article class="project-card">{% if p.image %}<img src="{{url_for('static',filename='uploads/'+p.image)}}">{% else %}<div class="project-art">{{loop.index|string}}</div>{% endif %}<div class="project-body"><div class="tags">{{p.technologies}}</div><h3>{{p.title}}</h3><p>{{p.description}}</p><a href="{{url_for('main.project',project_id=p.id)}}">View project →</a></div></article>{% endfor %}</div></section>
+
+<section class="section"><span class="eyebrow">JOURNEY</span><h2>Experience</h2><div class="timeline">{% for e in experiences %}<div class="timeline-item"><span>{{e.period}}</span><div><h3>{{e.title}}</h3><b>{{e.company}}</b><p>{{e.description}}</p></div></div>{% endfor %}</div></section>
+
+<section class="section"><span class="eyebrow">LEARNING</span><h2>Certificates</h2><div class="cert-grid">{% for c in certificates %}<div class="cert"><span>🏆</span><div><h3>{{c.title}}</h3><p>{{c.issuer}} · {{c.year}}</p>{% if c.url %}<a href="{{c.url}}" target="_blank">Verify →</a>{% endif %}</div></div>{% endfor %}</div></section>
+
+<section class="section"><span class="eyebrow">FROM THE BLOG</span><h2>Latest Notes</h2><div class="blog-grid">{% for p in posts %}<article class="blog-card"><small>{{p.created_at.strftime('%b %d, %Y') if p.created_at else ''}}</small><h3>{{p.title}}</h3><p>{{p.excerpt}}</p><a href="{{url_for('main.blog',slug=p.slug)}}">Read article →</a></article>{% endfor %}</div></section>
+
+<section id="contact" class="section contact"><div><span class="eyebrow">CONTACT</span><h2>Let's build something great.</h2><p>Have a project, idea or opportunity? Send a message.</p></div><form method="post" action="{{url_for('main.contact')}}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><input name="name" placeholder="Your name" required><input name="email" type="email" placeholder="Email address" required><input name="subject" placeholder="Subject"><textarea name="message" rows="6" placeholder="Tell me about it..." required></textarea><button class="btn primary" type="submit">Send Message →</button></form></section>
+{% endblock %}

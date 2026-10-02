@@ -1,0 +1,3 @@
+{% extends "admin/base.html" %}{% block content %}<div class="page-head"><div><span>PROFILE</span><h1>Skills</h1></div></div><form class="panel rowform" method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><input name="name" placeholder="Skill name" required><input name="level" type="number" min="0" max="100" value="80"><button class="save">Add</button></form><div class="panel"><table><tr><th>Skill</th><th>Level</th><th></th></tr>{% for x in items %}<tr><td>{{x.name}}</td><td>{{x.level}}%</td><td><form class="inline" method="post" action="{{url_for('admin.skill_delete',id=x.id)}}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button>Delete</button></form></td></tr>{% endfor %}</table></div>{% endblock %}

@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{% block title %}Admin{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/image-cropper.css') }}">
+</head>
+<body>
+<aside>
+  <div class="admin-brand">PORTFOLIO<span>ADMIN</span></div>
+  <nav>
+    <a href="{{ url_for('admin.dashboard') }}">▦ Dashboard</a>
+    <a href="{{ url_for('admin.projects') }}">◈ Projects</a>
+    <a href="{{ url_for('admin.skills') }}">✦ Skills</a>
+    <a href="{{ url_for('admin.experience') }}">◉ Experience</a>
+    <a href="{{ url_for('admin.certificates') }}">♢ Certificates</a>
+    <a href="{{ url_for('admin.blog') }}">✎ Blog</a>
+    <a href="{{ url_for('admin.messages') }}">✉ Messages</a>
+    <a href="{{ url_for('admin.settings') }}">⚙ Settings</a>
+    <a href="{{ url_for('admin.change_password') }}">🔒 Password</a>
+  </nav>
+  <a class="logout" href="{{ url_for('auth.logout') }}">Logout</a>
+</aside>
+<div class="admin-main">
+  <header><a href="{{ url_for('main.index') }}" target="_blank">View website ↗</a></header>
+  {% with messages=get_flashed_messages(with_categories=true) %}
+    {% for cat,msg in messages %}<div class="flash {{ cat }}">{{ msg }}</div>{% endfor %}
+  {% endwith %}
+  {% block content %}{% endblock %}
+</div>
+
+<!-- Shared image editor: works with every admin input[type=file][accept*=image]. -->
+<div id="imageCropModal" class="image-crop-modal" hidden aria-modal="true" role="dialog" aria-labelledby="cropTitle">
+  <div class="image-crop-dialog">
+    <div class="image-crop-header">
+      <h2 id="cropTitle">Adjust image</h2>
+      <button type="button" class="crop-icon-btn" id="cropClose" aria-label="Close">&times;</button>
+    </div>
+    <div class="image-crop-stage"><img id="cropImage" alt="Image to crop"></div>
+    <div class="image-crop-controls">
+      <label class="crop-field">Aspect ratio
+        <select id="cropAspect">
+          <option value="free">Free</option>
+          <option value="1">Square (1:1)</option>
+          <option value="1.6666667">Project (5:3)</option>
+          <option value="1.3333333">Landscape (4:3)</option>
+          <option value="1.7777778">Wide (16:9)</option>
+          <option value="0.6666667">Portrait (2:3)</option>
+        </select>
+      </label>
+      <div class="crop-field"><label for="cropZoom">Zoom</label><input id="cropZoom" type="range" min="0.1" max="3" step="0.05" value="1"></div>
+      <div class="crop-actions">
+        <button type="button" class="crop-btn crop-secondary" id="cropCancel">Cancel</button>
+        <button type="button" class="crop-btn crop-secondary" id="cropReset">Reset</button>
+        <button type="button" class="crop-btn crop-primary" id="cropApply">Crop &amp; Use Image</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
+<script src="{{ url_for('static', filename='js/image-cropper.js') }}"></script>
+</body>
+</html>
